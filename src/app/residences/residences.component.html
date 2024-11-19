@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Residences</title>
+  <!-- Add Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="container mt-4">
+    <div class="mb-3">
+      <label for="search" class="form-label">Rechercher par adresse :</label>
+      <input
+        id="search"
+        type="text"
+        [(ngModel)]="searchQuery"
+        placeholder="Entrez une adresse..."
+        class="form-control"
+      />
+    </div>
+
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Image</th>
+          <th>Status</th>
+          <th>Actions</th>
+          <th>Others</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let residence of filteredResidences()">
+          <td>{{ residence.id }}</td>
+          <td>{{ residence.name }}</td>
+          <td>{{ residence.showAddress ? residence.address : 'Hidden' }}</td>
+          <td>
+            <img [src]="residence.image" alt="{{ residence.name }}" class="img-thumbnail" style="width: 50px; height:auto;">
+          </td>
+          <td>{{ residence.status }}</td>
+          <td>
+            <span *ngIf="residence.status === 'Disponible'" class="text-success">✅ Disponible</span>
+            <span *ngIf="residence.status === 'En Construction'" class="text-warning">🏗️ En Construction</span>
+            <span *ngIf="residence.status === 'Vendu'" class="text-danger">❌ Vendu</span>
+          </td>
+          <td>
+            <button (click)="showLocation(residence)" class="btn btn-primary btn-sm me-5">Show Location</button>
+            <button (click)="toggleFavorite(residence)" class="btn btn-outline-danger btn-sm">
+              {{ residence.isFavorite ? '❤️' : '🤍' }} Like
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Add Bootstrap JS  -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>
